@@ -457,8 +457,8 @@ async def add_user_command(update: Update, context):
 
 
 # Create the application
-def main():
-    application = Application.builder().token(TOKEN).build()
+async def main():
+    application = Application.builder().token("YOUR_BOT_TOKEN").build()
 
     application.add_handler(CommandHandler("start", start_command))
     application.add_handler(CallbackQueryHandler(button_handler))
@@ -476,7 +476,8 @@ def main():
     application.add_error_handler(error_handler)
 
     print("BOT IS STARTED ✅")
-    application.run_polling()
+    await application.run_polling()
 
 if __name__ == "__main__":
-    main()
+    import asyncio
+    asyncio.run(main())
