@@ -10,6 +10,9 @@ from datetime import datetime, timedelta
 from broadcast import broadcast_message
 from config import BOT_TOKEN
 
+logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 TOKEN = BOT_TOKEN
 
 EXEMPT_USER_IDS = [6545754981, 7379318591, 6656608288]  
@@ -453,6 +456,7 @@ async def add_user_command(update: Update, context):
 
 # Create the application
 async def main():
+    # Create the application
     application = Application.builder().token(BOT_TOKEN).build()
 
     # Add handlers
@@ -474,7 +478,7 @@ async def main():
     # Start the bot in polling mode
     await application.run_polling(stop_signals=None)
 
-    print("BOT IS STARTED ✅")
+    logger.info("BOT IS STARTED ✅")
 
 if __name__ == "__main__":
     asyncio.run(main())
