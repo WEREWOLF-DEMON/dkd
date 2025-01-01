@@ -477,7 +477,7 @@ async def main():
     # Start the bot in polling mode
     try:
         logger.info("Starting bot...")
-        await application.run_polling(stop_signals=None)  # Keeps the bot running
+        await application.run_polling()  # Keeps the bot running without any shutdown handling
     except Exception as e:
         logger.error(f"Error occurred: {e}")
 
