@@ -453,7 +453,8 @@ async def add_user_command(update: Update, context):
 
 # Create the application
 def main():
-    application = Application.builder().token(TOKEN).build()
+    application = Application.builder().token(BOT_TOKEN).build()
+    await application.run_polling()
 
     application.add_handler(CommandHandler("start", start_command))
     application.add_handler(CallbackQueryHandler(button_handler))
@@ -477,4 +478,4 @@ def main():
     await application.run_polling()
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
