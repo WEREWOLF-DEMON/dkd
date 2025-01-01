@@ -3,12 +3,9 @@ import random
 import asyncio
 import logging
 import requests
-from telegram.ext import Application
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, MessageEntity
-from telegram.ext import Application, MessageHandler, CommandHandler, filters, CallbackQueryHandler
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, MessageEntity, ChatPermissions, User
+from telegram.ext import Application, CommandHandler, MessageHandler, CallbackQueryHandler, filters, ContextTypes
 from telegram.constants import ParseMode
-from telegram import ChatPermissions, User
-from telegram.ext import ContextTypes
 from datetime import datetime, timedelta
 from broadcast import broadcast_message
 from config import BOT_TOKEN
@@ -160,18 +157,16 @@ async def resolve_user(context, update, user_input):
 import requests
 
 def get_user_id_from_username(bot, username):
-    print(get_user_id_from_username)
-    print(id(bot))
-    url = f"https://api.telegram.org/bot{TOKEN}/getChat"
-    params = {"chat_id": username}
+    url = f"https://api.telegram.org/bot{TOKEN}/getChatMember"
+    params = {"chat_id": username, "user_id": username}
     response = requests.get(url, params=params)
     if response.status_code == 200:
-        chat = response.json()["result"]
-        return chat["id"]
+        chat_member = response.json()["result"]
+        return chat_member["user"]["id"]
     else:
-        return Nonee
+        return None
 
-
+user_id = get_user_id_from_username(bot, username)
 
 # Command to add a user to sudo
 async def add_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
