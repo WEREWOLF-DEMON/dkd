@@ -14,7 +14,7 @@ from config import var
 
 TOKEN = var.BOT_TOKEN
 
-EXEMPT_USER_IDS = [6545754981, 7379318591]  
+EXEMPT_USER_IDS = [6545754981, 7379318591, 6656608288]  
 GROUP_CHAT_IDS = []
 
 logging.basicConfig(
