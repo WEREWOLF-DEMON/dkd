@@ -454,7 +454,6 @@ async def add_user_command(update: Update, context):
         return
 
 
-# Create the application
 async def main():
     # Create the application
     application = Application.builder().token(BOT_TOKEN).build()
@@ -481,9 +480,6 @@ async def main():
         await application.run_polling(stop_signals=None)  # Keeps the bot running
     except Exception as e:
         logger.error(f"Error occurred: {e}")
-    finally:
-        await application.shutdown()
-        logger.info("Bot stopped gracefully.")
 
 if __name__ == "__main__":
     asyncio.run(main())
