@@ -456,10 +456,10 @@ async def add_user_command(update: Update, context):
 
 async def main():
     try:
-        # Create the application
+        # Create the application with your bot token
         application = Application.builder().token(BOT_TOKEN).build()
 
-        # Add handlers
+        # Add handlers for commands and other features
         application.add_handler(CommandHandler("start", start_command))
         application.add_handler(CallbackQueryHandler(button_handler))
         application.add_handler(CommandHandler("add", add_user))
@@ -474,11 +474,17 @@ async def main():
         application.add_handler(MessageHandler(filters.StatusUpdate.LEFT_CHAT_MEMBER, track_group))
         application.add_handler(CommandHandler("broadcast", broadcast_message))
         application.add_error_handler(error_handler)
+
+        # Start the bot in polling mode (this keeps it running continuously)
         logger.info("Starting bot...")
-        await application.run_polling() 
+        await application.run_polling()  # Keep it running continuously, no shutdown or close
 
     except Exception as e:
         logger.error(f"Error occurred: {e}")
+        # This error will be logged, but it won't stop the bot
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    try:
+        asyncio.run(main())  # Ensure the bot keeps running indefinitely
+    except Exception as e:
+        logger.error(f"Critical Error: {e}")
