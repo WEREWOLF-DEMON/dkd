@@ -2,7 +2,6 @@ import os
 import random
 import asyncio
 import logging
-from telegram.ext import update
 import requests
 from telegram.ext import Application
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, MessageEntity
