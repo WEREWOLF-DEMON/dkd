@@ -476,9 +476,14 @@ async def main():
     application.add_error_handler(error_handler)
 
     # Start the bot in polling mode
-    await application.run_polling(stop_signals=None)
-
-    logger.info("BOT IS STARTED ✅")
+    try:
+        logger.info("Starting bot...")
+        await application.run_polling(stop_signals=None)  # Keeps the bot running
+    except Exception as e:
+        logger.error(f"Error occurred: {e}")
+    finally:
+        await application.shutdown()
+        logger.info("Bot stopped gracefully.")
 
 if __name__ == "__main__":
     asyncio.run(main())
