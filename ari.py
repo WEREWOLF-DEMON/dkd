@@ -10,9 +10,9 @@ from telegram import ChatPermissions, User
 from telegram.ext import ContextTypes
 from datetime import datetime, timedelta
 from broadcast import broadcast_message
-from config import var
+from config import *
 
-TOKEN = var.BOT_TOKEN
+TOKEN = BOT_TOKEN
 
 EXEMPT_USER_IDS = [6545754981, 7379318591, 6656608288]  
 GROUP_CHAT_IDS = []
