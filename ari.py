@@ -3,6 +3,7 @@ import random
 import asyncio
 import logging
 import requests
+from telegram.ext import Application
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, MessageEntity
 from telegram.ext import Application, MessageHandler, CommandHandler, filters, CallbackQueryHandler
 from telegram.constants import ParseMode
