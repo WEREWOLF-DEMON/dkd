@@ -166,7 +166,7 @@ def get_user_id_from_username(bot, username):
     else:
         return None
 
-user_id = get_user_id_from_username(application, username)
+user_id = get_user_id_from_username(Application, username)
 
 # Command to add a user to sudo
 async def add_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
