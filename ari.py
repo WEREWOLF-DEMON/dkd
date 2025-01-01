@@ -10,7 +10,7 @@ from telegram import ChatPermissions, User
 from telegram.ext import ContextTypes
 from datetime import datetime, timedelta
 from broadcast import broadcast_message
-from config import *
+from config import BOT_TOKEN
 
 TOKEN = BOT_TOKEN
 
