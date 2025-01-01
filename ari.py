@@ -455,29 +455,28 @@ async def add_user_command(update: Update, context):
 
 
 async def main():
-    # Create the application
-    application = Application.builder().token(BOT_TOKEN).build()
-
-    # Add handlers
-    application.add_handler(CommandHandler("start", start_command))
-    application.add_handler(CallbackQueryHandler(button_handler))
-    application.add_handler(CommandHandler("add", add_user))
-    application.add_handler(CommandHandler("remove", remove_user))
-    application.add_handler(CommandHandler("mute", mute_user))
-    application.add_handler(CommandHandler("unmute", unmute_user))
-    application.add_handler(CommandHandler("ping", ping_u))
-    application.add_handler(CommandHandler("info", get_user_id_from_username))
-    application.add_handler(MessageHandler(filters.UpdateType.EDITED_MESSAGE, delete_edited_messages))
-    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, delete_invalid_messages))
-    application.add_handler(MessageHandler(filters.StatusUpdate.NEW_CHAT_MEMBERS, track_group))
-    application.add_handler(MessageHandler(filters.StatusUpdate.LEFT_CHAT_MEMBER, track_group))
-    application.add_handler(CommandHandler("broadcast", broadcast_message))
-    application.add_error_handler(error_handler)
-
-    # Start the bot in polling mode
     try:
+        # Create the application
+        application = Application.builder().token(BOT_TOKEN).build()
+
+        # Add handlers
+        application.add_handler(CommandHandler("start", start_command))
+        application.add_handler(CallbackQueryHandler(button_handler))
+        application.add_handler(CommandHandler("add", add_user))
+        application.add_handler(CommandHandler("remove", remove_user))
+        application.add_handler(CommandHandler("mute", mute_user))
+        application.add_handler(CommandHandler("unmute", unmute_user))
+        application.add_handler(CommandHandler("ping", ping_u))
+        application.add_handler(CommandHandler("info", get_user_id_from_username))
+        application.add_handler(MessageHandler(filters.UpdateType.EDITED_MESSAGE, delete_edited_messages))
+        application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, delete_invalid_messages))
+        application.add_handler(MessageHandler(filters.StatusUpdate.NEW_CHAT_MEMBERS, track_group))
+        application.add_handler(MessageHandler(filters.StatusUpdate.LEFT_CHAT_MEMBER, track_group))
+        application.add_handler(CommandHandler("broadcast", broadcast_message))
+        application.add_error_handler(error_handler)
         logger.info("Starting bot...")
-        await application.run_polling()  # Keeps the bot running without any shutdown handling
+        await application.run_polling() 
+
     except Exception as e:
         logger.error(f"Error occurred: {e}")
 
