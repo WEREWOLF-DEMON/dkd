@@ -12,7 +12,7 @@ def make_int(str_input):
     return int_list
 
 class Var:
-    BOT_TOKEN = os.getenv("BOT_TOKEN", "")
+    BOT_TOKEN = "7663809864:AAGs0qBrU-fCTCwHGYhsfFnK9Wj54pDWa0Y"
     sudo = os.getenv("SUDO", "")
     SUDO = []
     if sudo:
