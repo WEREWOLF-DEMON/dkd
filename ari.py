@@ -477,25 +477,22 @@ async def start_bot():
     logger.info("Bot is running...")
     await application.run_polling(drop_pending_updates=True)
 
-
 def main():
-    """Run the bot in a Heroku-compatible event loop."""
+    """Run the bot safely in a Heroku environment."""
     try:
         logger.info("Starting bot...")
-        
-        # Check if there's already a running loop
-        try:
-            loop = asyncio.get_running_loop()
-        except RuntimeError:
-            # Create a new loop if none exists
-            loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(loop)
 
-        # Run the bot
+        # Heroku workaround for event loop
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+
+        # Run the bot within the new loop
         loop.run_until_complete(start_bot())
     except Exception as e:
         logger.error(f"Critical Error in main: {e}")
-
+    finally:
+        # Avoid attempting to close the loop
+        logger.info("Bot process finished.")
 
 if __name__ == "__main__":
     main()
