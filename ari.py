@@ -455,9 +455,9 @@ async def add_user_command(update: Update, context):
 
 
 
-async def run_bot():
+async def start_bot():
+    """Initialize and start the bot."""
     try:
-        # Create the application with your bot token
         application = Application.builder().token(BOT_TOKEN).build()
 
         # Add handlers for commands and other features
@@ -476,20 +476,24 @@ async def run_bot():
         application.add_handler(CommandHandler("broadcast", broadcast_message))
         application.add_error_handler(error_handler)
 
-        # Log bot start
         logger.info("Starting bot...")
-        # Run the bot until it is manually stopped
         await application.run_polling(drop_pending_updates=True)
     except Exception as e:
-        logger.error(f"Critical Error in run_bot: {e}")
+        logger.error(f"Critical Error in start_bot: {e}")
+
 
 def main():
+    """Run the bot in the current event loop."""
     try:
-        # Use `asyncio.run()` only if the event loop isn't already running
-        asyncio.run(run_bot())
-    except RuntimeError as e:
-        # If the event loop is already running (common on Heroku), use `asyncio.create_task`
-        logger.warning(f"Event loop is already running, using create_task instead. Error: {e}")
+        loop = asyncio.get_event_loop()
+        loop.create_task(start_bot())
+        loop.run_forever()
+    except Exception as e:
+        logger.error(f"Critical Error in main: {e}")
+
+
+if __name__ == "__main__":
+    main()
         asyncio.get_event_loop().create_task(run_bot())
 
 if __name__ == "__main__":
