@@ -455,10 +455,10 @@ async def add_user_command(update: Update, context):
 
 
 async def start_bot():
-    """Initialize and start the bot."""
+    """Initialize and run the bot."""
     application = Application.builder().token(BOT_TOKEN).build()
 
-    # Add handlers for commands and other features
+    # Add handlers
     application.add_handler(CommandHandler("start", start_command))
     application.add_handler(CallbackQueryHandler(button_handler))
     application.add_handler(CommandHandler("add", add_user))
@@ -475,23 +475,25 @@ async def start_bot():
     application.add_error_handler(error_handler)
 
     logger.info("Bot is running...")
-    await application.run_polling(drop_pending_updates=True)
+    try:
+        await application.initialize()
+        await application.start()
+        await application.updater.start_polling()
+        await asyncio.Event().wait()  # Keeps the bot running
+    except Exception as e:
+        logger.error(f"Critical Error in start_bot: {e}")
+    finally:
+        await application.shutdown()
+        await application.stop()
 
 def main():
-    """Run the bot safely in a Heroku environment."""
+    """Run the bot safely."""
     try:
         logger.info("Starting bot...")
-
-        # Heroku workaround for event loop
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-
-        # Run the bot within the new loop
-        loop.run_until_complete(start_bot())
-    except Exception as e:
+        asyncio.run(start_bot())
+    except RuntimeError as e:
         logger.error(f"Critical Error in main: {e}")
     finally:
-        # Avoid attempting to close the loop
         logger.info("Bot process finished.")
 
 if __name__ == "__main__":
