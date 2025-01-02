@@ -477,14 +477,14 @@ async def main():
 
         # Start the bot in polling mode (this keeps it running continuously)
         logger.info("Starting bot...")
-        await application.run_polling()  # Keep it running continuously, no shutdown or close
+        await application.run_polling(drop_pending_updates=True)  # Keep the bot running
 
     except Exception as e:
         logger.error(f"Error occurred: {e}")
-        # This error will be logged, but it won't stop the bot
+        # Log errors without causing crashes, allowing the bot to keep running
 
 if __name__ == "__main__":
     try:
-        asyncio.run(main())  # Ensure the bot keeps running indefinitely
+        asyncio.run(main())  # Ensure the bot runs continuously without shutting down
     except Exception as e:
         logger.error(f"Critical Error: {e}")
