@@ -483,13 +483,19 @@ async def start_bot():
 
 
 def main():
-    """Run the bot in the current event loop."""
+    """Run the bot in a Heroku-compatible event loop."""
     try:
-        loop = asyncio.get_event_loop()
-        loop.create_task(start_bot())
-        loop.run_forever()
+        # Use asyncio.run() only if no event loop exists
+        try:
+            loop = asyncio.get_running_loop()
+        except RuntimeError:
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+
+        loop.run_until_complete(start_bot())
     except Exception as e:
         logger.error(f"Critical Error in main: {e}")
 
+
 if __name__ == "__main__":
-    main()
+    main(
