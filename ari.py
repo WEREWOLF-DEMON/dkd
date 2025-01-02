@@ -454,7 +454,8 @@ async def add_user_command(update: Update, context):
         return
 
 
-async def main():
+
+async def run_bot():
     try:
         # Create the application with your bot token
         application = Application.builder().token(BOT_TOKEN).build()
@@ -475,16 +476,21 @@ async def main():
         application.add_handler(CommandHandler("broadcast", broadcast_message))
         application.add_error_handler(error_handler)
 
-        # Start the bot in polling mode (this keeps it running continuously)
+        # Log bot start
         logger.info("Starting bot...")
-        await application.run_polling(drop_pending_updates=True)  # Keep the bot running
-
+        # Run the bot until it is manually stopped
+        await application.run_polling(drop_pending_updates=True)
     except Exception as e:
-        logger.error(f"Error occurred: {e}")
-        # Log errors without causing crashes, allowing the bot to keep running
+        logger.error(f"Critical Error in run_bot: {e}")
+
+def main():
+    try:
+        # Use `asyncio.run()` only if the event loop isn't already running
+        asyncio.run(run_bot())
+    except RuntimeError as e:
+        # If the event loop is already running (common on Heroku), use `asyncio.create_task`
+        logger.warning(f"Event loop is already running, using create_task instead. Error: {e}")
+        asyncio.get_event_loop().create_task(run_bot())
 
 if __name__ == "__main__":
-    try:
-        asyncio.run(main())  # Ensure the bot runs continuously without shutting down
-    except Exception as e:
-        logger.error(f"Critical Error: {e}")
+    main()
