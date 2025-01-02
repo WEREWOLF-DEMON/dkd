@@ -491,10 +491,5 @@ def main():
     except Exception as e:
         logger.error(f"Critical Error in main: {e}")
 
-
-if __name__ == "__main__":
-    main()
-        asyncio.get_event_loop().create_task(run_bot())
-
 if __name__ == "__main__":
     main()
