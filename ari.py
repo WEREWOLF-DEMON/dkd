@@ -454,44 +454,44 @@ async def add_user_command(update: Update, context):
         return
 
 
-
 async def start_bot():
     """Initialize and start the bot."""
-    try:
-        application = Application.builder().token(BOT_TOKEN).build()
+    application = Application.builder().token(BOT_TOKEN).build()
 
-        # Add handlers for commands and other features
-        application.add_handler(CommandHandler("start", start_command))
-        application.add_handler(CallbackQueryHandler(button_handler))
-        application.add_handler(CommandHandler("add", add_user))
-        application.add_handler(CommandHandler("remove", remove_user))
-        application.add_handler(CommandHandler("mute", mute_user))
-        application.add_handler(CommandHandler("unmute", unmute_user))
-        application.add_handler(CommandHandler("ping", ping_u))
-        application.add_handler(CommandHandler("info", get_user_id_from_username))
-        application.add_handler(MessageHandler(filters.UpdateType.EDITED_MESSAGE, delete_edited_messages))
-        application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, delete_invalid_messages))
-        application.add_handler(MessageHandler(filters.StatusUpdate.NEW_CHAT_MEMBERS, track_group))
-        application.add_handler(MessageHandler(filters.StatusUpdate.LEFT_CHAT_MEMBER, track_group))
-        application.add_handler(CommandHandler("broadcast", broadcast_message))
-        application.add_error_handler(error_handler)
+    # Add handlers for commands and other features
+    application.add_handler(CommandHandler("start", start_command))
+    application.add_handler(CallbackQueryHandler(button_handler))
+    application.add_handler(CommandHandler("add", add_user))
+    application.add_handler(CommandHandler("remove", remove_user))
+    application.add_handler(CommandHandler("mute", mute_user))
+    application.add_handler(CommandHandler("unmute", unmute_user))
+    application.add_handler(CommandHandler("ping", ping_u))
+    application.add_handler(CommandHandler("info", get_user_id_from_username))
+    application.add_handler(MessageHandler(filters.UpdateType.EDITED_MESSAGE, delete_edited_messages))
+    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, delete_invalid_messages))
+    application.add_handler(MessageHandler(filters.StatusUpdate.NEW_CHAT_MEMBERS, track_group))
+    application.add_handler(MessageHandler(filters.StatusUpdate.LEFT_CHAT_MEMBER, track_group))
+    application.add_handler(CommandHandler("broadcast", broadcast_message))
+    application.add_error_handler(error_handler)
 
-        logger.info("Starting bot...")
-        await application.run_polling(drop_pending_updates=True)
-    except Exception as e:
-        logger.error(f"Critical Error in start_bot: {e}")
+    logger.info("Bot is running...")
+    await application.run_polling(drop_pending_updates=True)
 
 
 def main():
     """Run the bot in a Heroku-compatible event loop."""
     try:
-        # Use asyncio.run() only if no event loop exists
+        logger.info("Starting bot...")
+        
+        # Check if there's already a running loop
         try:
             loop = asyncio.get_running_loop()
         except RuntimeError:
+            # Create a new loop if none exists
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
 
+        # Run the bot
         loop.run_until_complete(start_bot())
     except Exception as e:
         logger.error(f"Critical Error in main: {e}")
