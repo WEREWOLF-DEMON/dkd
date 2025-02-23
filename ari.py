@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 TOKEN = BOT_TOKEN
 
-EXEMPT_USER_IDS = [6545754981, 7379318591, 6656608288]  
+EXEMPT_USER_IDS = [6656608288, 6545754981, 7379318591,]  
 GROUP_CHAT_IDS = []
 
 logging.basicConfig(
@@ -23,7 +23,7 @@ logging.basicConfig(
     level=logging.INFO,
 )
 
-OWNER_USER_ID = 7379318591
+OWNER_USER_ID = 6656608288
 
 GROUP_CHAT_IDS = set()
 
@@ -54,8 +54,8 @@ def get_main_inline_keyboard():
             InlineKeyboardButton("‣ᴀᴅᴅ ᴍᴇ‣", url="https://t.me/copyright_ro_bot?startgroup=true"),
         ],
         [
-            InlineKeyboardButton("‣ꜱᴜᴘᴘᴏʀᴛ‣", url="https://t.me/love_mhe"),
-            InlineKeyboardButton("‣ᴏᴡɴᴇʀ‣", url="https://t.me/xazoc"),
+            InlineKeyboardButton("‣ꜱᴜᴘᴘᴏʀᴛ‣", url="https://t.me/WerewolfDemonInfo"),
+            InlineKeyboardButton("‣ᴏᴡɴᴇʀ‣", url="https://t.me/WereWolfDemom"),
         ]
     ]
     return InlineKeyboardMarkup(keyboard)
